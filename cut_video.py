@@ -33,8 +33,6 @@ def process_text(input_text,video_path):
     
     for i,line in enumerate(lines):
         # Use regex to find the timestamp and text
-        if i < 17:
-            continue
         match = re.match(pattern, line)
         video_timestamps = []
         
@@ -110,6 +108,7 @@ input_text = """
 10:01:21 K8s in VSCode
 10:05:52 Jupyter in Containers
 """
+
 timestamps, output_filename = process_text(input_text,'input_file.mp4')
 # print(timestamps)
 # print(output_filename)
