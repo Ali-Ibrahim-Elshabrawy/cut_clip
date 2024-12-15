@@ -19,19 +19,23 @@ def get_last_timestamp(video_path):
     
     return last_timestamp
 
-def process_text(input_text,video_path):
+def process_text(input_text,video_path,start = 0):
+    
     last_timestamp = get_last_timestamp(video_path)
     # Regular expression to match timestamps (HH:MM:SS format) followed by text
     pattern = r"(\d{2}:\d{2}:\d{2})\s(.+)"
     
     # Split input into lines
     lines = input_text.strip().split("\n")
-    
+    if start > len(lines):
+        print("check start value as it's greater than total number of sections")
     # Initialize lists for timestamps and filenames
     timestamps = []
     filenames = []
     
     for i,line in enumerate(lines):
+        if i < start:
+            continue
         # Use regex to find the timestamp and text
         match = re.match(pattern, line)
         video_timestamps = []
@@ -81,35 +85,33 @@ def cut_video_no_encoding(input_video, timestamps,output_name):
     
 # Sample input text
 input_text = """
-00:00:00 Intro
-00:00:30 Introduction to Containers
-00:19:49 Container Architecture
-00:50:14 Introduction to Docker
-01:07:38 Installing Docker
-01:27:17 Container = Application
-01:43:21 Docker Engine Architecture
-01:51:17 Images - Deep Dive
-02:37:17 Docker in VSCode
-02:48:28 Containers - Deep Dive
-03:03:40 Network
-03:47:31 Storage
-04:22:22 Containerizing an Application
-04:55:23 Dockerfile - Deep Dive
-06:05:38 Image Registries
-06:16:10 Docker Compose
-07:04:52 Docker Swarm
-08:04:17 Docker Stack
-08:27:15 Portainer
-08:36:37 Introduction to Kubernetes
-08:41:25 K8s High Level Architecture
-08:56:10 Installing Minikube
-09:07:56 K8s Logical Architecture 
-09:23:26 K8s Sample Deployment
-10:01:21 K8s in VSCode
-10:05:52 Jupyter in Containers
+00:00:00 Introduction
+00:00:11 Variables
+00:24:02 Strings
+00:46:00 Object Types
+01:12:15 Boolean
+01:37:17 Comments
+01:41:21 Sequences (Iterables)
+01:45:10 Lists
+02:22:09 range()
+02:43:42 Tuples
+02:50:40 Strings as Iterables
+02:54:46 Sets
+03:04:34 Dictionaries
+03:28:18 Strings - A Deeper Look
+04:06:06 If Statement
+04:37:55 while Loop
+04:55:32 for Loop
+05:35:45 Functions
+06:36:29 Classes
+08:25:24 Modules and Packages
+08:59:00 Python Standard Library Tour
+09:37:55 Working with Files
+10:16:02 Testing and Exception Handling
+10:52:52 Bonus and Quiz
 """
-
-timestamps, output_filename = process_text(input_text,'input_file.mp4')
+start_cut = 0
+timestamps, output_filename = process_text(input_text,'input_file.mp4',start = start_cut)
 # print(timestamps)
 # print(output_filename)
-cut_video_no_encoding("input_file.mp4", timestamps,output_filename)
+cut_video_no_encoding("input_file.mp4", timestamps,output_filename,)
